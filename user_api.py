@@ -1,7 +1,6 @@
 import requests
 import json
 from constant import Constants, TestData
-from url import Urls
 
 class UserApi:
     def __init__(self):

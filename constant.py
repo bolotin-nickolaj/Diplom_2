@@ -10,5 +10,5 @@ class TestData:
     #    {"password": "0000000"},
     #    {"email": "TestUserData@testmail.ru"},
     #]
-    ingredients = ["60d3b41abdacab0026a733c6", "609646e4dc916e00276b2870"]
-    wrong_ingredients = ["61", "75"]
+    ingredients = ["61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa6f"]
+    wrong_ingredients = ["09098098", "456876554"]
