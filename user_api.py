@@ -15,8 +15,6 @@ class UserApi:
             headers = {"accept": "application/json", "Content-Type": "application/json", "Authorization": auth}
             response = requests.get(url=path, headers=headers)
         return response
-    def delete(self, path, auth=None):
-        response = requests.delete(url=path, headers={"Authorization": auth})
     def patch(self, path, data, auth=None):
         response = requests.patch(url=path, headers={"Authorization": auth}, data=json.dumps(data))
         return response
