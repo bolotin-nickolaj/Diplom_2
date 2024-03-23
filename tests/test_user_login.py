@@ -1,8 +1,8 @@
 import allure
-import pytest
 
 from user_api import UserApi
 from url import Urls
+from constant import Responses as R
 
 
 class TestLogin:
@@ -14,8 +14,8 @@ class TestLogin:
                 "password": register_new_user_and_return_login_password[1],
                 "email": register_new_user_and_return_login_password[2]}
         response = api.post(Urls.user_login, user)
-        assert response.status_code == 200
-        assert response.json()["success"] == True
+        assert response.status_code == R.resp_test_user_login_status_code1
+        assert response.json()["success"] == R.resp_test_user_login_success
 
     @allure.title("Безуспешный логин пользователя с неуказанным паролем.")
     @allure.description("Попытка логина с неверными данными.")
@@ -25,5 +25,5 @@ class TestLogin:
                 "password": " ",
                 "email": register_new_user_and_return_login_password[2]}
         response = api.post(Urls.user_login, user)
-        assert response.status_code == 401
-        assert response.json()["message"] == "email or password are incorrect"
+        assert response.status_code == R.resp_test_user_login_status_code2
+        assert response.json()["message"] == R.resp_test_user_login_message

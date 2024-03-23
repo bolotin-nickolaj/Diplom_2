@@ -1,6 +1,7 @@
 import allure
 from user_api import UserApi
 from url import Urls
+from constant import Responses as R
 
 
 class TestGetOrders:
@@ -15,7 +16,7 @@ class TestGetOrders:
         accessToken = login.json()["accessToken"]
         orders = api.get(Urls.order,accessToken)
         assert orders.status_code == 200
-        assert orders.json()["success"] == True
+        assert orders.json()["success"] == R.resp_test_get_orders_success
 
     @allure.title("Получение заказов пользователя")
     @allure.description("Получить заказы НЕ авторизированного пользователя")
@@ -23,4 +24,4 @@ class TestGetOrders:
         api = UserApi()
         orders = api.get(Urls.order)
         assert orders.status_code == 401
-        assert orders.json()["message"] == "You should be authorised"
+        assert orders.json()["message"] == R.resp_test_get_orders_authorised

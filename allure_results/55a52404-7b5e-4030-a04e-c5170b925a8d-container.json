@@ -1,1 +1,0 @@
-{"uuid": "b7b03e95-9bd4-42f8-8b1a-27f152a78c2b", "children": ["f399cfbe-f43e-4a21-a27c-17f2458d690d"], "befores": [{"name": "register_new_user_and_return_login_password", "status": "passed", "start": 1710357419366, "stop": 1710357419696}], "start": 1710357419366, "stop": 1710357420382}

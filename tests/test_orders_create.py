@@ -1,7 +1,7 @@
 import allure
 from user_api import UserApi
 from url import Urls
-from constant import TestData
+from constant import TestData, Responses as R
 
 
 class TestOrdersCreate:
@@ -16,7 +16,7 @@ class TestOrdersCreate:
         accessToken = login.json()["accessToken"]
         order_data = {"ingredients": TestData.ingredients, "Authorization": accessToken}
         orders = api.post(Urls.order, order_data)
-        assert orders.json()["success"] == True
+        assert orders.json()["success"] == R.resp_test_orders_create_success1
 
     @allure.title("Успешное создание заказа с указанием ингредиентов")
     @allure.description("Неавторизированный пользователь тоже может создать заказ")
@@ -24,7 +24,7 @@ class TestOrdersCreate:
         api = UserApi()
         order_data = {"ingredients": TestData.ingredients}
         orders = api.post(Urls.order, order_data)
-        assert orders.json()["success"] == True
+        assert orders.json()["success"] == R.resp_test_orders_create_success2
 
     @allure.title("Неуспешное создание заказа с неверными или отсутствующими ингредиентами")
     @allure.description("Авторизированный пользователь не может создать заказ с пустыми ингредиентами")
@@ -38,7 +38,7 @@ class TestOrdersCreate:
         order_data = {"ingredients": None, "Authorization": accessToken}
         orders = api.post(Urls.order, order_data)
         assert orders.status_code == 400
-        assert orders.json()["message"] == "Ingredient ids must be provided"
+        assert orders.json()["message"] == R.resp_test_orders_create_ingredient
 
 
     @allure.title("Неуспешное создание заказа с неверными или отсутствующими ингредиентами")
@@ -47,4 +47,4 @@ class TestOrdersCreate:
         api = UserApi()
         order_data = {"ingredients": TestData.wrong_ingredients}
         orders = api.post(Urls.order, order_data)
-        assert orders.status_code == 500
+        assert orders.status_code == R.resp_test_orders_create_status_code
