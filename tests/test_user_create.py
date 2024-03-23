@@ -13,13 +13,11 @@ class TestUser:
         assert len(register_new_user_and_return_login_password) > R.resp_test_user_create_count
     @allure.title("Создание пользователя, который уже зарегистрирован.")
     @allure.description("Нельзя создать двух одинаковых пользователей.")
-    def test_create_user_with_same_parameters_is_impossible(self, register_new_user_and_return_login_password):
+    def test_create_user_with_same_parameters_is_impossible(self, get_data_of_new_register_user):
         api = UserApi()
-        data = {"name": register_new_user_and_return_login_password[0],
-                "password": register_new_user_and_return_login_password[1],
-                "email": register_new_user_and_return_login_password[2]}
+        data = get_data_of_new_register_user
         response = requests.post(url=Urls.user_create, data=data)
-        assert response.status_code == 403
+        assert response.status_code == R.resp_test_user_create_status_code1
         assert response.json()['message'] == R.resp_test_user_create_exists
     @allure.title("Создание пользователя и не заполнить одно из обязательных полей.")
     @allure.description("Нельзя создать пользователя с пустыми параметрами.")
@@ -27,5 +25,5 @@ class TestUser:
         api = UserApi()
         data = {"name": "", "password": "", "email": ""}
         response = requests.post(url=Urls.user_create, data=data)
-        assert response.status_code == 403
+        assert response.status_code == R.resp_test_user_create_status_code2
         assert response.json()['message'] == R.resp_test_user_create_required

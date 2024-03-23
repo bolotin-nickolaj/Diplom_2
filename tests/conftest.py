@@ -40,3 +40,17 @@ def register_new_user_and_return_login_password():
 
     # возвращаем список
     return login_pass
+
+@pytest.fixture
+def get_data_of_new_register_user(register_new_user_and_return_login_password):
+    user = {"name": register_new_user_and_return_login_password[0],
+            "password": register_new_user_and_return_login_password[1],
+            "email": register_new_user_and_return_login_password[2]}
+    return user
+
+@pytest.fixture
+def get_wrong_data_of_new_register_user(register_new_user_and_return_login_password):
+    user = {"name": register_new_user_and_return_login_password[0],
+            "password": " ",
+            "email": register_new_user_and_return_login_password[2]}
+    return user

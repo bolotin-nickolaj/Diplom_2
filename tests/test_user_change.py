@@ -8,11 +8,9 @@ from constant import Responses as R
 class TestChangeUser:
     @allure.title("Изменение данных пользователя с авторизацией")
     @allure.description("Авторизованный пользователь может изменить данные своей учетки.")
-    def test_changing_user_data_with_authorization(self, register_new_user_and_return_login_password):
+    def test_changing_user_data_with_authorization(self, get_data_of_new_register_user):
         api = UserApi()
-        user = {"name": register_new_user_and_return_login_password[0],
-                "password": register_new_user_and_return_login_password[1],
-                "email": register_new_user_and_return_login_password[2]}
+        user = get_data_of_new_register_user
         login = api.post(Urls.user_login, user)
         accessToken = login.json()["accessToken"]
         changed_user_data = {"name": "", "password": "", "email": ""}

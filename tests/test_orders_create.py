@@ -28,16 +28,14 @@ class TestOrdersCreate:
 
     @allure.title("Неуспешное создание заказа с неверными или отсутствующими ингредиентами")
     @allure.description("Авторизированный пользователь не может создать заказ с пустыми ингредиентами")
-    def test_creating_an_order_by_an_authorized_user_without_ingredients(self, register_new_user_and_return_login_password):
+    def test_creating_an_order_by_an_authorized_user_without_ingredients(self, get_data_of_new_register_user):
         api = UserApi()
-        user = {"name": register_new_user_and_return_login_password[0],
-                "password": register_new_user_and_return_login_password[1],
-                "email": register_new_user_and_return_login_password[2]}
+        user = get_data_of_new_register_user
         login = api.post(Urls.user_login, user)
         accessToken = login.json()["accessToken"]
         order_data = {"ingredients": None, "Authorization": accessToken}
         orders = api.post(Urls.order, order_data)
-        assert orders.status_code == 400
+        assert orders.status_code == R.resp_test_orders_create_status_code1
         assert orders.json()["message"] == R.resp_test_orders_create_ingredient
 
 
@@ -47,4 +45,4 @@ class TestOrdersCreate:
         api = UserApi()
         order_data = {"ingredients": TestData.wrong_ingredients}
         orders = api.post(Urls.order, order_data)
-        assert orders.status_code == R.resp_test_orders_create_status_code
+        assert orders.status_code == R.resp_test_orders_create_status_code2
